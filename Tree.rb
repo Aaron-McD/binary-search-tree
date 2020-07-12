@@ -1,6 +1,8 @@
 require_relative "Node.rb"
 
 class Tree
+    attr_reader :root, :data
+
     def initialize(array)
         @data = build_data(array)
         @root = build_tree(@data)
@@ -31,6 +33,36 @@ class Tree
             mid.append_left_child(left_child)
             mid.append_right_child(right_child)
             return mid
+        end
+    end
+
+    def insert(value)
+        # Find the position the node would belong in by starting at the root node and comparing each node as it moves down the tree
+        current_node = @root
+        node = Node.new(value)
+        repeat_value = false
+        while(true)
+            if(node == current_node)
+                repeat_value = true
+                break
+            elsif(node > current_node)
+                if(current_node.right == nil)
+                    current_node.append_right_child(node)
+                    break
+                else
+                    current_node = current_node.right
+                end
+            else
+                if(current_node.left == nil)
+                    current_node.append_left_child(node)
+                    break
+                else
+                    current_node = current_node.left
+                end
+            end
+        end
+        unless(repeat_value)
+            @data.push(value).sort!
         end
     end
 

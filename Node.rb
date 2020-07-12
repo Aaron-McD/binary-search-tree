@@ -16,6 +16,10 @@ class Node
     end
 
     def <=>(other)
-        self.value <=> other.value
+        if(other == nil)
+            return self.value <=> nil
+        else
+            return self.value <=> other.value
+        end
     end
 end

@@ -89,7 +89,7 @@ class Tree
             end
         end
         unless(not_found)
-            arr = build_array_from(current_node)
+            arr = depth_order(current_node)
             arr.delete(value)
             if(prev_node == nil)
                 @root = build_tree(arr)
@@ -99,6 +99,61 @@ class Tree
                 prev_node.append_left_child(build_tree(arr))
             end
         end
+    end
+
+    def pretty_print(node = root, prefix = "", is_left = true)
+        pretty_print(node.right, "#{prefix}#{is_left ? "| " : " "}", false) if node.right
+        puts "#{prefix}#{is_left ? "└── " : "┌── "}#{node.value.to_s}"
+        pretty_print(node.left, "#{prefix}#{is_left ? " " : "| "}", true) if node.left
+    end
+
+    def find(value)
+        current_node = @root
+        while(true)
+            if(current_node == nil)
+                return false
+            elsif(current_node.value == value)
+                return current_node
+            elsif(current_node.value < value)
+                current_node = current_node.right
+            else
+                current_node = current_node.left
+            end
+        end
+    end
+
+    def level_order(node)
+        que = Array.new(1, node)
+        arr_out = []
+        while(que.length > 0)
+            current_node = que[0]
+            que.delete(current_node)
+            arr_out.push(current_node.value)
+            unless(current_node.left == nil)
+                que.push(current_node.left)
+            end
+            unless(current_node.right == nil)
+                que.push(current_node.right)
+            end
+        end
+        return arr_out
+    end
+
+    def depth_order(node)
+        # base case: node == nil, return empty array
+        if(node == nil)
+            return []
+        end
+        arr = Array.new(1, node.value)
+        left_arr = depth_order(node.left)
+        right_arr = depth_order(node.right)
+        left_arr.each do |val|
+            arr.push(val)
+        end
+        right_arr.each do |val|
+            arr.push(val)
+        end
+        return arr
     end
 
     private
@@ -117,22 +172,5 @@ class Tree
             end
         end
         return final
-    end
-
-    def build_array_from(node)
-        # base case: node == nil, return empty array
-        if(node == nil)
-            return []
-        end
-        arr = Array.new(1, node.value)
-        left_arr = build_array_from(node.left)
-        right_arr = build_array_from(node.right)
-        left_arr.each do |val|
-            arr.push(val)
-        end
-        right_arr.each do |val|
-            arr.push(val)
-        end
-        return arr
     end
 end

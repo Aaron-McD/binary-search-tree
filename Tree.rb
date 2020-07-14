@@ -172,6 +172,17 @@ class Tree
         return arr
     end
 
+    def depth(node)
+        # base cases: left or right child is nil, therefore the depth of that side is 0
+        left_depth = node.left == nil ? 0 : (1 + depth(node.left))
+        right_depth = node.right == nil ? 0 : (1 + depth(node.right))
+        if(right_depth > left_depth)
+            return right_depth
+        else
+            return left_depth
+        end
+    end
+
     private
 
     def build_data(array)

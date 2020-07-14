@@ -89,7 +89,7 @@ class Tree
             end
         end
         unless(not_found)
-            arr = depth_order(current_node)
+            arr = level_order(current_node)
             arr.delete(value)
             if(prev_node == nil)
                 @root = build_tree(arr)
@@ -139,20 +139,36 @@ class Tree
         return arr_out
     end
 
-    def depth_order(node)
+    def preorder(node)
         # base case: node == nil, return empty array
         if(node == nil)
             return []
         end
         arr = Array.new(1, node.value)
-        left_arr = depth_order(node.left)
-        right_arr = depth_order(node.right)
-        left_arr.each do |val|
-            arr.push(val)
+        arr = arr + preorder(node.left)
+        arr = arr + preorder(node.right)
+        return arr
+    end
+
+    def inorder(node)
+        #base case: node == nil, return empty array
+        if(node == nil)
+            return []
         end
-        right_arr.each do |val|
-            arr.push(val)
+        arr = inorder(node.left)
+        arr.push(node.value)
+        arr = arr + inorder(node.right)
+        return arr
+    end
+
+    def postorder(node)
+        #base case: node == nil, return empty array
+        if(node == nil)
+            return []
         end
+        arr = postorder(node.right)
+        arr.push(node.value)
+        arr = arr + postorder(node.left)
         return arr
     end
 

@@ -183,6 +183,22 @@ class Tree
         end
     end
 
+    def balanced?(node = @root)
+        left_depth = depth(node.left)
+        right_depth = depth(node.right)
+        diff = right_depth > left_depth ? (right_depth - left_depth) : (left_depth - right_depth)
+        return diff < 2
+    end
+
+    def rebalance(node)
+        data = level_order(node)
+        return build_tree(data)
+    end
+
+    def rebalance!
+        @root = rebalance(@root)
+    end
+
     private
 
     def build_data(array)

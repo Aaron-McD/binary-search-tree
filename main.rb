@@ -1,19 +1,33 @@
 require_relative "Tree.rb"
 
-tree = Tree.new([1,7,4,23,8,9,4,3,5,7,9,67,6345,324])
-# tree = Tree.new([23,24,25,26,27])
+puts "Creating Tree of random numbers..."
+sleep(1)
+tree = Tree.new(Array.new(15) { rand(1..100) })
 
-tree.pretty_print
-puts tree.balanced?
-tree.insert(68)
-tree.pretty_print
+puts "Is the tree balanced: #{tree.balanced?}"
+sleep(1)
 
-puts tree.balanced?
-tree.insert(69)
-tree.pretty_print
-puts tree.balanced?
+puts "Elements in level order: #{tree.level_order}"
+puts "Elements in preorder: #{tree.preorder}"
+puts "Elements inorder: #{tree.inorder}"
+puts "Elements in postorder: #{tree.postorder}"
+sleep(2)
 
+puts "Adding 5 numbers greater than 100"
+sleep(1)
+5.times do
+    tree.insert(rand(100..200))
+end
+
+puts "Is the tree still balanced: #{tree.balanced?}"
+sleep(1)
+puts "Rebalancing..."
+sleep(1)
 tree.rebalance!
-
-tree.pretty_print
-puts tree.balanced?
+puts "Is the tree balanced now: #{tree.balanced?}"
+sleep(1)
+puts "Elements in level order: #{tree.level_order}"
+puts "Elements in preorder: #{tree.preorder}"
+puts "Elements inorder: #{tree.inorder}"
+puts "Elements in postorder: #{tree.postorder}"
+sleep(2)

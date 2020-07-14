@@ -122,7 +122,7 @@ class Tree
         end
     end
 
-    def level_order(node)
+    def level_order(node = @root)
         que = Array.new(1, node)
         arr_out = []
         while(que.length > 0)
@@ -139,7 +139,7 @@ class Tree
         return arr_out
     end
 
-    def preorder(node)
+    def preorder(node = @root)
         # base case: node == nil, return empty array
         if(node == nil)
             return []
@@ -150,7 +150,7 @@ class Tree
         return arr
     end
 
-    def inorder(node)
+    def inorder(node = @root)
         #base case: node == nil, return empty array
         if(node == nil)
             return []
@@ -161,7 +161,7 @@ class Tree
         return arr
     end
 
-    def postorder(node)
+    def postorder(node = @root)
         #base case: node == nil, return empty array
         if(node == nil)
             return []
@@ -172,7 +172,7 @@ class Tree
         return arr
     end
 
-    def depth(node)
+    def depth(node = @root)
         # base cases: left or right child is nil, therefore the depth of that side is 0
         left_depth = node.left == nil ? 0 : (1 + depth(node.left))
         right_depth = node.right == nil ? 0 : (1 + depth(node.right))
